@@ -3,7 +3,6 @@ import { Redirect, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   Grid,
-  Box,
   Typography,
   Button,
   FormControl,
@@ -11,6 +10,7 @@ import {
   FormHelperText,
 } from "@material-ui/core";
 import { register } from "./store/utils/thunkCreators";
+import SideBanner from "./components/style/SideBanner";
 
 const Login = (props) => {
   const history = useHistory();
@@ -37,14 +37,43 @@ const Login = (props) => {
   }
 
   return (
-    <Grid container justify="center">
-      <Box>
-        <Grid container item>
-          <Typography>Need to log in?</Typography>
-          <Button onClick={() => history.push("/login")}>Login</Button>
+    <Grid container style={{ height: "100vh", width: "100vw" }}>
+      <Grid item md={4} xs={12}>
+        <SideBanner />
+      </Grid>
+      <Grid
+        md={8}
+        xs={12}
+        container
+        item
+        direction="column"
+        justify="center"
+        alignItems="center"
+        style={{ position: "relative" }}
+      >
+        <Grid
+          container
+          item
+          justify="center"
+          alignItems="center"
+          style={{ position: "absolute", top: "3rem" }}
+        >
+          <Typography color="secondary">Already have an account?</Typography>
+          <Button onClick={() => history.push("/login")} color="primary">
+            Login
+          </Button>
         </Grid>
         <form onSubmit={handleRegister}>
-          <Grid>
+        <Grid
+            container
+            item
+            direction="column"
+            justify="center"
+            alignItems="flex-start"
+          >
+            <Typography variant="h4" component="h1">
+              Create an account.
+            </Typography>
             <Grid>
               <FormControl>
                 <TextField
@@ -52,6 +81,7 @@ const Login = (props) => {
                   label="Username"
                   name="username"
                   type="text"
+                  color="secondary"
                   required
                 />
               </FormControl>
@@ -63,6 +93,7 @@ const Login = (props) => {
                   aria-label="e-mail address"
                   type="email"
                   name="email"
+                  color="secondary"
                   required
                 />
               </FormControl>
@@ -75,6 +106,7 @@ const Login = (props) => {
                   type="password"
                   inputProps={{ minLength: 6 }}
                   name="password"
+                  color="secondary"
                   required
                 />
                 <FormHelperText>
@@ -90,6 +122,7 @@ const Login = (props) => {
                   type="password"
                   inputProps={{ minLength: 6 }}
                   name="confirmPassword"
+                  color="secondary"
                   required
                 />
                 <FormHelperText>
@@ -97,12 +130,18 @@ const Login = (props) => {
                 </FormHelperText>
               </FormControl>
             </Grid>
-            <Button type="submit" variant="contained" size="large">
+            <Button
+              type="submit"
+              variant="contained"
+              size="large"
+              color="primary"
+              disableElevation
+            >
               Create
             </Button>
           </Grid>
         </form>
-      </Box>
+      </Grid>
     </Grid>
   );
 };
