@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Box } from "@material-ui/core";
 import { Input, Header, Messages } from "./index";
 import { connect } from "react-redux";
+import { fetchConversations } from "../../store/utils/thunkCreators";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -43,6 +44,7 @@ const ActiveChat = (props) => {
               otherUser={conversation.otherUser}
               conversationId={conversation.id}
               user={user}
+              fetchConvos={props.fetchConversations}
             />
           </Box>
         </>
@@ -62,4 +64,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, null)(ActiveChat);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchConversations: () => {
+      dispatch(fetchConversations());
+    }
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ActiveChat);

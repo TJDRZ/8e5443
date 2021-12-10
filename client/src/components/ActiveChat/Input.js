@@ -36,6 +36,7 @@ const Input = (props) => {
       sender: conversationId ? null : user
     };
     await postMessage(reqBody);
+    await props.fetchConvos();
     setText("");
   };
 
