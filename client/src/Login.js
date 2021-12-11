@@ -46,18 +46,21 @@ const Login = (props) => {
           container
           item
           alignItems="center"
-          style={{ position: "absolute", top: "3rem" }}
+          style={{ position: "absolute", top: "2rem" }}
         >
-          <Typography color="secondary" style={{ margin: "0 auto" }}>
-            Don't have an account?
-          </Typography>
-          <Button
-            onClick={() => history.push("/register")}
-            color="primary"
-            style={{ margin: "0 3rem" }}
+          <Grid
+            item
+            md={11}
+            xs={9}
+            style={{ textAlign: "center", whiteSpace: "nowrap" }}
           >
-            Create account
-          </Button>
+            <Typography color="secondary">Don't have an account?</Typography>
+          </Grid>
+          <Grid item md={1} xs={3} style={{ textAlign: "center" }}>
+            <Button onClick={() => history.push("/register")} color="primary">
+              Create account
+            </Button>
+          </Grid>
         </Grid>
         <form onSubmit={handleLogin} style={{ width: "75%" }}>
           <Grid
@@ -67,7 +70,11 @@ const Login = (props) => {
             alignItems="stretch"
             style={{ gap: "1rem" }}
           >
-            <Typography variant="h4" component="h1">
+            <Typography
+              variant="h4"
+              component="h1"
+              style={{ fontWeight: "600" }}
+            >
               Welcome back!
             </Typography>
             <FormControl margin="normal" required>
