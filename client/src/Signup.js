@@ -63,82 +63,73 @@ const Login = (props) => {
             Login
           </Button>
         </Grid>
-        <form onSubmit={handleRegister}>
-        <Grid
+        <form onSubmit={handleRegister} style={{ width: "75%" }}>
+          <Grid
             container
             item
             direction="column"
-            justify="center"
-            alignItems="flex-start"
+            alignItems="stretch"
+            style={{ gap: "1rem" }}
           >
             <Typography variant="h4" component="h1">
               Create an account.
             </Typography>
-            <Grid>
-              <FormControl>
-                <TextField
-                  aria-label="username"
-                  label="Username"
-                  name="username"
-                  type="text"
-                  color="secondary"
-                  required
-                />
-              </FormControl>
+            <FormControl>
+              <TextField
+                aria-label="username"
+                label="Username"
+                name="username"
+                type="text"
+                required
+              />
+            </FormControl>
+            <FormControl>
+              <TextField
+                label="E-mail address"
+                aria-label="e-mail address"
+                type="email"
+                name="email"
+                required
+              />
+            </FormControl>
+            <FormControl error={!!formErrorMessage.confirmPassword}>
+              <TextField
+                aria-label="password"
+                label="Password"
+                type="password"
+                inputProps={{ minLength: 6 }}
+                name="password"
+                required
+              />
+              <FormHelperText>
+                {formErrorMessage.confirmPassword}
+              </FormHelperText>
+            </FormControl>
+            <FormControl error={!!formErrorMessage.confirmPassword}>
+              <TextField
+                label="Confirm Password"
+                aria-label="confirm password"
+                type="password"
+                inputProps={{ minLength: 6 }}
+                name="confirmPassword"
+                required
+              />
+              <FormHelperText>
+                {formErrorMessage.confirmPassword}
+              </FormHelperText>
+            </FormControl>
+            <Grid item style={{ alignSelf: "center" }}>
+              <Button
+                type="submit"
+                variant="contained"
+                size="large"
+                color="primary"
+                disableElevation
+                style={{ width: "10rem" }}
+              >
+                Create
+              </Button>
             </Grid>
-            <Grid>
-              <FormControl>
-                <TextField
-                  label="E-mail address"
-                  aria-label="e-mail address"
-                  type="email"
-                  name="email"
-                  color="secondary"
-                  required
-                />
-              </FormControl>
-            </Grid>
-            <Grid>
-              <FormControl error={!!formErrorMessage.confirmPassword}>
-                <TextField
-                  aria-label="password"
-                  label="Password"
-                  type="password"
-                  inputProps={{ minLength: 6 }}
-                  name="password"
-                  color="secondary"
-                  required
-                />
-                <FormHelperText>
-                  {formErrorMessage.confirmPassword}
-                </FormHelperText>
-              </FormControl>
-            </Grid>
-            <Grid>
-              <FormControl error={!!formErrorMessage.confirmPassword}>
-                <TextField
-                  label="Confirm Password"
-                  aria-label="confirm password"
-                  type="password"
-                  inputProps={{ minLength: 6 }}
-                  name="confirmPassword"
-                  color="secondary"
-                  required
-                />
-                <FormHelperText>
-                  {formErrorMessage.confirmPassword}
-                </FormHelperText>
-              </FormControl>
-            </Grid>
-            <Button
-              type="submit"
-              variant="contained"
-              size="large"
-              color="primary"
-              disableElevation
-            >
-              Create
-            </Button>
           </Grid>
         </form>
       </Grid>

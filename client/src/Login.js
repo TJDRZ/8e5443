@@ -45,53 +45,55 @@ const Login = (props) => {
         <Grid
           container
           item
-          justify="center"
           alignItems="center"
           style={{ position: "absolute", top: "3rem" }}
         >
-          <Typography color="secondary">Don't have an account?</Typography>
-          <Button onClick={() => history.push("/register")} color="primary">
+          <Typography color="secondary" style={{ margin: "0 auto" }}>
+            Don't have an account?
+          </Typography>
+          <Button
+            onClick={() => history.push("/register")}
+            color="primary"
+            style={{ margin: "0 3rem" }}
+          >
             Create account
           </Button>
         </Grid>
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleLogin} style={{ width: "75%" }}>
           <Grid
             container
             item
             direction="column"
-            justify="center"
-            alignItems="flex-start"
+            alignItems="stretch"
+            style={{ gap: "1rem" }}
           >
             <Typography variant="h4" component="h1">
               Welcome back!
             </Typography>
-            <Grid>
-              <FormControl margin="normal" required>
-                <TextField
-                  aria-label="username"
-                  label="E-mail address"
-                  name="username"
-                  type="text"
-                  color="secondary"
-                />
-              </FormControl>
-            </Grid>
+            <FormControl margin="normal" required>
+              <TextField
+                aria-label="username"
+                label="E-mail address"
+                name="username"
+                type="text"
+              />
+            </FormControl>
             <FormControl margin="normal" required>
               <TextField
                 label="Password"
                 aria-label="password"
                 type="password"
                 name="password"
-                color="secondary"
               />
             </FormControl>
-            <Grid>
+            <Grid item style={{ alignSelf: "center" }}>
               <Button
                 type="submit"
                 variant="contained"
                 size="large"
                 color="primary"
                 disableElevation
+                style={{ width: "10rem" }}
               >
                 Login
               </Button>
