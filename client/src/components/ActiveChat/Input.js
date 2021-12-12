@@ -84,7 +84,7 @@ const Input = (props) => {
       .catch((err) => console.log(err));
   };
 
-  const handleImgSubmit = async (event) => {
+  const handleImgSubmit = (event) => {
     event.preventDefault();
     if (!previewSource) return;
     setPreviewSource();
