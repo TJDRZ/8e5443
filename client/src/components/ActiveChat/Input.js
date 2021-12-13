@@ -31,6 +31,12 @@ const useStyles = makeStyles(() => ({
     height: "10rem",
     margin: "1rem",
   },
+  imgIcon: {
+    position: "absolute",
+    bottom: "2.5rem",
+    right: "1rem",
+    cursor: "pointer",
+  },
 }));
 
 const Input = (props) => {
@@ -80,7 +86,7 @@ const Input = (props) => {
       setPreviewSource(reader.result);
     };
 
-    fetchCloudinary(file, setImgURL)    
+    fetchCloudinary(file, setImgURL);
   };
 
   const handleImgSubmit = (event) => {
@@ -103,7 +109,7 @@ const Input = (props) => {
         className={`${classes.root} ${classes.hidden}`}
         onSubmit={handleImgSubmit}
       >
-        <FormControl fullWidth hiddenLabel style={{ position: "relative" }}>
+        <FormControl fullWidth hiddenLabel>
           <FilledInput
             classes={{ root: classes.input }}
             disableUnderline
@@ -122,7 +128,7 @@ const Input = (props) => {
           Attach
         </Button>
       </form>
-      <Typography ref={imgAttachTypo} variant="h6" style={{ display: "none" }}>
+      <Typography ref={imgAttachTypo} className={classes.hidden} variant="h6">
         Image(s) Attached:
       </Typography>
       {attachments.map((img) => {
@@ -136,7 +142,7 @@ const Input = (props) => {
         );
       })}
       <form className={classes.root} onSubmit={handleTextSubmit}>
-        <FormControl fullWidth hiddenLabel style={{ position: "relative" }}>
+        <FormControl fullWidth hiddenLabel>
           <FilledInput
             classes={{ root: classes.input }}
             disableUnderline
@@ -145,16 +151,7 @@ const Input = (props) => {
             name="text"
             onChange={handleTextChange}
           />
-          <ImageIcon
-            fontSize="large"
-            style={{
-              position: "absolute",
-              bottom: "2.5rem",
-              right: "1rem",
-              cursor: "pointer",
-            }}
-            onClick={toggleImgInput}
-          />
+          <ImageIcon className={classes.imgIcon} fontSize="large" onClick={toggleImgInput} />
         </FormControl>
       </form>
     </Grid>
