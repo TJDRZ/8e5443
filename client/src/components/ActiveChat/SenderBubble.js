@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Typography } from "@material-ui/core";
+import uniqid from "uniqid";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -25,6 +26,11 @@ const useStyles = makeStyles(() => ({
     background: "#F4F6FA",
     borderRadius: "10px 10px 0 10px",
   },
+  img: {
+    width: "10rem",
+    height: "10rem",
+    margin: "1rem",
+  },
 }));
 
 const SenderBubble = (props) => {
@@ -34,17 +40,17 @@ const SenderBubble = (props) => {
     <Box className={classes.root}>
       <Typography className={classes.date}>{time}</Typography>
       <Box className={classes.bubble}>
-        {attachments ? attachments.map((img, index) => {
+        <Typography className={classes.text}>{text}</Typography>
+        {attachments ? attachments.map(img => {
           return (
             <img
-              key={index}
+              key={uniqid()}
+              className={classes.img}
               src={img}
               alt="Sent"
-              style={{ width: "10rem", height: "10rem", margin: "0 1rem" }}
             />
           );
         }) : null}
-        <Typography className={classes.text}>{text}</Typography>
       </Box>
     </Box>
   );

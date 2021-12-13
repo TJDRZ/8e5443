@@ -9,7 +9,8 @@ import {
 import ImageIcon from "@material-ui/icons/Image";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import { postMessage } from "../../store/utils/thunkCreators";
+import { postMessage, fetchCloudinary } from "../../store/utils/thunkCreators";
+import uniqid from "uniqid";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -21,6 +22,14 @@ const useStyles = makeStyles(() => ({
     backgroundColor: "#F4F6FA",
     borderRadius: 8,
     marginBottom: 20,
+  },
+  hidden: {
+    display: "none",
+  },
+  img: {
+    width: "10rem",
+    height: "10rem",
+    margin: "1rem",
   },
 }));
 
@@ -71,17 +80,7 @@ const Input = (props) => {
       setPreviewSource(reader.result);
     };
 
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "gglru5ny");
-    await fetch("https://api.cloudinary.com/v1_1/tjdrz/image/upload", {
-      method: "POST",
-      body: formData,
-      mode: "cors",
-    })
-      .then((res) => res.json())
-      .then((res) => setImgURL(res.secure_url))
-      .catch((err) => console.log(err));
+    fetchCloudinary(file, setImgURL)    
   };
 
   const handleImgSubmit = (event) => {
@@ -97,16 +96,11 @@ const Input = (props) => {
   return (
     <Grid>
       {previewSource && (
-        <img
-          src={previewSource}
-          alt="Chosen"
-          style={{ width: "10rem", height: "10rem" }}
-        />
+        <img className={classes.img} src={previewSource} alt="Chosen" />
       )}
       <form
         ref={imgInput}
-        className={classes.root}
-        style={{ display: "none" }}
+        className={`${classes.root} ${classes.hidden}`}
         onSubmit={handleImgSubmit}
       >
         <FormControl fullWidth hiddenLabel style={{ position: "relative" }}>
@@ -124,7 +118,6 @@ const Input = (props) => {
           size="large"
           color="primary"
           disableElevation
-          style={{ width: "10rem" }}
         >
           Attach
         </Button>
@@ -132,7 +125,16 @@ const Input = (props) => {
       <Typography ref={imgAttachTypo} variant="h6" style={{ display: "none" }}>
         Image(s) Attached:
       </Typography>
-      {attachments.map((img, index) => {return <img key={index} src={img} alt="Attached" style={{ width: "10rem", height: "10rem", margin: "1rem" }}/>})}
+      {attachments.map((img) => {
+        return (
+          <img
+            className={classes.img}
+            key={uniqid()}
+            src={img}
+            alt="Attached"
+          />
+        );
+      })}
       <form className={classes.root} onSubmit={handleTextSubmit}>
         <FormControl fullWidth hiddenLabel style={{ position: "relative" }}>
           <FilledInput

@@ -96,7 +96,7 @@ const sendMessage = (data, body) => {
 export const postMessage = (body) => async (dispatch) => {
   try {
     const data = await saveMessage(body);
-    
+
     if (!body.conversationId) {
       dispatch(addConversation(body.recipientId, data.message));
     } else {
@@ -115,5 +115,25 @@ export const searchUsers = (searchTerm) => async (dispatch) => {
     dispatch(setSearchedUsers(data));
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const fetchCloudinary = async (file, setImgURL) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", process.env.REACT_APP_CLOUDINARY);
+  try {
+    const API = await fetch(
+      "https://api.cloudinary.com/v1_1/tjdrz/image/upload",
+      {
+        method: "POST",
+        body: formData,
+        mode: "cors",
+      }
+    );
+    const data = await API.json();
+    setImgURL(data.secure_url);
+  } catch (err) {
+    console.log(err);
   }
 };
