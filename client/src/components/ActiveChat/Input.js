@@ -27,7 +27,7 @@ const useStyles = makeStyles(() => ({
     display: "none",
   },
   img: {
-    width: "10rem",
+    width: "auto",
     height: "10rem",
     margin: "1rem",
   },
@@ -110,11 +110,17 @@ const Input = (props) => {
         onSubmit={handleImgSubmit}
       >
         <FormControl fullWidth hiddenLabel>
+          {/* <input classes={{ root: classes.input }}
+            type="file"
+            name="imgFile"
+            multiple
+            onChange={handleImgChange} /> */}
           <FilledInput
             classes={{ root: classes.input }}
             disableUnderline
             type="file"
             name="imgFile"
+            multiple
             onChange={handleImgChange}
           />
         </FormControl>

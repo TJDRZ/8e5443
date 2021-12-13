@@ -27,7 +27,7 @@ const useStyles = makeStyles(() => ({
     borderRadius: "10px 10px 0 10px",
   },
   img: {
-    width: "10rem",
+    width: "auto",
     height: "10rem",
     margin: "1rem",
   },
