@@ -118,10 +118,7 @@ export const searchUsers = (searchTerm) => async (dispatch) => {
   }
 };
 
-export const fetchCloudinary = async (file, setImgURL) => {
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("upload_preset", process.env.REACT_APP_CLOUDINARY);
+export const fetchCloudinary = async (formData, setImgURL) => {
   try {
     const API = await fetch(
       "https://api.cloudinary.com/v1_1/tjdrz/image/upload",
@@ -130,7 +127,7 @@ export const fetchCloudinary = async (file, setImgURL) => {
         body: formData,
         mode: "cors",
       }
-    );
+      );
     const data = await API.json();
     setImgURL(data.secure_url);
   } catch (err) {

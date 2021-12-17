@@ -80,13 +80,18 @@ const Input = (props) => {
 
   const handleImgChange = async (event) => {
     const file = event.target.files[0];
+
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onloadend = () => {
+    reader.onload = () => {
       setPreviewSource(reader.result);
     };
 
-    fetchCloudinary(file, setImgURL);
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", process.env.REACT_APP_CLOUDINARY);
+
+    fetchCloudinary(formData, setImgURL);
   };
 
   const handleImgSubmit = (event) => {
@@ -102,7 +107,12 @@ const Input = (props) => {
   return (
     <Grid>
       {previewSource && (
-        <img className={classes.img} src={previewSource} alt="Chosen" />
+        <img
+          key={uniqid()}
+          className={classes.img}
+          src={previewSource}
+          alt="Chosen"
+        />
       )}
       <form
         ref={imgInput}
@@ -110,17 +120,12 @@ const Input = (props) => {
         onSubmit={handleImgSubmit}
       >
         <FormControl fullWidth hiddenLabel>
-          {/* <input classes={{ root: classes.input }}
-            type="file"
-            name="imgFile"
-            multiple
-            onChange={handleImgChange} /> */}
           <FilledInput
             classes={{ root: classes.input }}
             disableUnderline
             type="file"
             name="imgFile"
-            multiple
+            inputProps={{ accept: "image/*" }}
             onChange={handleImgChange}
           />
         </FormControl>
@@ -157,7 +162,11 @@ const Input = (props) => {
             name="text"
             onChange={handleTextChange}
           />
-          <ImageIcon className={classes.imgIcon} fontSize="large" onClick={toggleImgInput} />
+          <ImageIcon
+            className={classes.imgIcon}
+            fontSize="large"
+            onClick={toggleImgInput}
+          />
         </FormControl>
       </form>
     </Grid>
