@@ -118,19 +118,30 @@ export const searchUsers = (searchTerm) => async (dispatch) => {
   }
 };
 
-export const fetchCloudinary = async (formData, setImgURL) => {
-  try {
-    const API = await fetch(
-      "https://api.cloudinary.com/v1_1/tjdrz/image/upload",
-      {
-        method: "POST",
-        body: formData,
-        mode: "cors",
+export const fetchCloudinary = async (formInfos, setImgURLs) => {
+  const fetchPromises = formInfos.map((formData) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const API = await fetch(
+          "https://api.cloudinary.com/v1_1/tjdrz/image/upload",
+          {
+            method: "POST",
+            body: formData,
+            mode: "cors",
+          }
+        );
+        const data = await API.json();
+        resolve(data);
+      } catch (err) {
+        console.log(err);
+        reject(err);
       }
-      );
-    const data = await API.json();
-    setImgURL(data.secure_url);
-  } catch (err) {
-    console.log(err);
-  }
+    });
+  });
+  const fetchInfos = await Promise.all(fetchPromises);
+  const secureURLs = [];
+  fetchInfos.forEach((fetchInfo) => {
+    secureURLs.push(fetchInfo.secure_url);
+    setImgURLs(secureURLs);
+  });
 };
