@@ -78,7 +78,7 @@ const Input = (props) => {
       : (imgInput.current.style.display = "none");
   };
 
-  const handleImgChange = async (event) => {
+  const handleImgChange = (event) => {
     const file = event.target.files[0];
 
     const reader = new FileReader();
