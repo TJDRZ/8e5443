@@ -122,18 +122,19 @@ export const fetchCloudinary = async (formInfos, setImgURLs) => {
   const fetchPromises = formInfos.map((formData) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const API = await fetch(
+        const data = await axios.post(
           "https://api.cloudinary.com/v1_1/tjdrz/image/upload",
+          formData,
           {
-            method: "POST",
-            body: formData,
-            mode: "cors",
+            transformRequest: (data, headers) => {
+              delete headers["x-access-token"];
+              return data;
+            },
           }
         );
-        const data = await API.json();
         resolve(data);
       } catch (err) {
-        console.log(err);
+        console.error(err);
         reject(err);
       }
     });
@@ -141,7 +142,7 @@ export const fetchCloudinary = async (formInfos, setImgURLs) => {
   const fetchInfos = await Promise.all(fetchPromises);
   const secureURLs = [];
   fetchInfos.forEach((fetchInfo) => {
-    secureURLs.push(fetchInfo.secure_url);
+    secureURLs.push(fetchInfo.data.secure_url);
     setImgURLs(secureURLs);
   });
 };

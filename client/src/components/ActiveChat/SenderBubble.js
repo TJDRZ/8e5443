@@ -41,7 +41,7 @@ const SenderBubble = (props) => {
       <Typography className={classes.date}>{time}</Typography>
       <Box className={classes.bubble}>
         <Typography className={classes.text}>{text}</Typography>
-        {attachments ? attachments.map(img => {
+        {attachments && attachments.map(img => {
           return (
             <img
               key={uniqid()}
@@ -50,7 +50,7 @@ const SenderBubble = (props) => {
               alt="Sent"
             />
           );
-        }) : null}
+        })}
       </Box>
     </Box>
   );

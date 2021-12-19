@@ -114,7 +114,6 @@ const Input = (props) => {
 
   const handleImgSubmit = (event) => {
     event.preventDefault();
-    console.log(imgURLs);
     if (imgURLs.length !== previewSource.length) {
       alert(
         "Images not loaded yet, please try clicking the Attach button again."
