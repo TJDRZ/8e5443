@@ -93,9 +93,9 @@ const sendMessage = (data, body) => {
 
 // message format to send: {recipientId, text, conversationId}
 // conversationId will be set to null if its a brand new conversation
-export const postMessage = (body) => (dispatch) => {
+export const postMessage = (body) => async (dispatch) => {
   try {
-    const data = saveMessage(body);
+    const data = await saveMessage(body);
 
     if (!body.conversationId) {
       dispatch(addConversation(body.recipientId, data.message));
@@ -116,4 +116,33 @@ export const searchUsers = (searchTerm) => async (dispatch) => {
   } catch (error) {
     console.error(error);
   }
+};
+
+export const fetchCloudinary = async (formInfos, setImgURLs) => {
+  const fetchPromises = formInfos.map((formData) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const data = await axios.post(
+          "https://api.cloudinary.com/v1_1/tjdrz/image/upload",
+          formData,
+          {
+            transformRequest: (data, headers) => {
+              delete headers["x-access-token"];
+              return data;
+            },
+          }
+        );
+        resolve(data);
+      } catch (err) {
+        console.error(err);
+        reject(err);
+      }
+    });
+  });
+  const fetchInfos = await Promise.all(fetchPromises);
+  const secureURLs = [];
+  fetchInfos.forEach((fetchInfo) => {
+    secureURLs.push(fetchInfo.data.secure_url);
+    setImgURLs(secureURLs);
+  });
 };
