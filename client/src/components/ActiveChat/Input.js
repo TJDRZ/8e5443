@@ -64,7 +64,6 @@ const Input = (props) => {
       attachments: attachments ? attachments : null,
     };
     await postMessage(reqBody);
-    await props.fetchConvos();
     setText("");
     setPreviewSource([]);
     setAttachments([]);
